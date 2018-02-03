@@ -4,10 +4,11 @@ import soolutions.hometaskapp.core.Amount;
 import soolutions.hometaskapp.user.User;
 
 public class BasicAccount implements Account {
-    private final Amount amount;
+    private Amount amount;
     private final User user;
 
     public BasicAccount(User user) {
+      // TODO(vivek): I am not sure if using 'new' is a good idea here
       this(user, new Amount(0, "USD"));
     }
 
@@ -24,5 +25,10 @@ public class BasicAccount implements Account {
     @Override
     public Amount balance() {
       return amount;
+    }
+
+    @Override
+    public void deposit(Amount amount) {
+      this.amount = amount.add(this.amount);;
     }
 }
