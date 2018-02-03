@@ -1,8 +1,11 @@
 package soolutions.hometaskapp;
 
 import org.junit.jupiter.api.Test;
-import soolutions.hometaskapp.basic.BasicAccount;
-import soolutions.hometaskapp.basic.BasicUser;
+
+import soolutions.hometaskapp.account.Account;
+import soolutions.hometaskapp.account.BasicAccount;
+import soolutions.hometaskapp.core.Amount;
+import soolutions.hometaskapp.user.BasicUser;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,6 +14,6 @@ public class BasicAccountTest {
     void openAccount() {
         final Account account = new BasicAccount(new BasicUser());
         assertEquals(true, account.open());
-        assertEquals(0, account.balance());
+        assertEquals(new Amount(0, "USD"), account.balance());
     }
 }
