@@ -1,6 +1,6 @@
 package soolutions.hometaskapp.account;
 
-import soolutions.hometaskapp.core.Amount;
+import soolutions.hometaskapp.common.Amount;
 
 public interface Account {
     boolean open();

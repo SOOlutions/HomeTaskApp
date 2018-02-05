@@ -1,4 +1,4 @@
-package soolutions.hometaskapp.core;
+package soolutions.hometaskapp.common;
 
 public class InvalidAmountException extends RuntimeException {
   public InvalidAmountException(double value) {

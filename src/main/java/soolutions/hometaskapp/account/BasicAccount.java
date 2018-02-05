@@ -1,6 +1,6 @@
 package soolutions.hometaskapp.account;
 
-import soolutions.hometaskapp.core.Amount;
+import soolutions.hometaskapp.common.Amount;
 import soolutions.hometaskapp.user.User;
 
 public class BasicAccount implements Account {

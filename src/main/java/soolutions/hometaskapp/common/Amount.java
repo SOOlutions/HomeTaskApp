@@ -1,13 +1,14 @@
-package soolutions.hometaskapp.core;
+package soolutions.hometaskapp.common;
 
-// TODO(vivek): Write docs for each public class
+/**
+ * @todo #2:15m/DEV Add class description
+ */
 public final class Amount {
   private final double value;
   private final String currency;
 
-// TODO(vivek): Check if there is an exisiting library for currency handling
   public Amount(double value, String currency) {
-    if (Double.MAX_VALUE < value || value < 0) {
+    if (value < 0) {
       throw new InvalidAmountException(value);
     }
 

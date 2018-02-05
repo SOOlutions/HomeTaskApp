@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import soolutions.hometaskapp.account.Account;
 import soolutions.hometaskapp.account.BasicAccount;
-import soolutions.hometaskapp.core.Amount;
+import soolutions.hometaskapp.common.Amount;
 import soolutions.hometaskapp.user.BasicUser;
 
 import static org.junit.jupiter.api.Assertions.*;
