@@ -8,7 +8,6 @@ public class BasicAccount implements Account {
     private final User user;
 
     public BasicAccount(User user) {
-      // TODO(vivek): I am not sure if using 'new' is a good idea here
       this(user, new Amount(0, "USD"));
     }
 
