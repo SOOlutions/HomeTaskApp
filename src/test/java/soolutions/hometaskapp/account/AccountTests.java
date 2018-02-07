@@ -18,7 +18,14 @@ public class AccountTests {
     @Test
     void openAccount() {
         final Account account = createAccount();
+
         assertEquals(true, account.open());
+    }
+
+    @Test
+    void newAccountHasZeroBalance() {
+        final Account account = createAccount();
+
         assertEquals(new Amount(0, "USD"), account.balance());
     }
 
@@ -26,16 +33,16 @@ public class AccountTests {
     void depositAmount() {
         final Account account = createAccount();
         account.apply(new Deposit(new Amount(0, "USD"),"Sample Deposit 1"));
-        assertEquals(new Amount(0, "USD"), account.balance());
         account.apply(new Deposit(new Amount(1, "USD"),"Sample Deposit 2"));
-        assertEquals(new Amount(1, "USD"), account.balance());
         account.apply(new Deposit(new Amount(10.99, "USD"), "Sample Deposit 3"));
+
         assertEquals(new Amount(11.99, "USD"), account.balance());
     }
 
     @Test
     void depositAmountInvalidAmount() {
         final Account account = createAccount();
+
         assertThrows(InvalidAmountException.class, () -> {
             account.apply(new Deposit(new Amount(-1, "USD"),"Sample Deposit 1"));
         }, "should fail");
@@ -45,9 +52,8 @@ public class AccountTests {
     void depositAmountCurrencyMismatch() {
         final Account account = createAccount();
         account.apply(new Deposit(new Amount(0, "USD"),"Sample Deposit 1"));
-        assertEquals(new Amount(0, "USD"), account.balance());
         account.apply(new Deposit(new Amount(1, "USD"),"Sample Deposit 2"));
-        assertEquals(new Amount(1, "USD"), account.balance());
+
         assertThrows(CurrencyMismatchException.class, () -> {
             account.apply(new Deposit(new Amount(7, "EUR"),"Sample Deposit 3"));
         }, "should fail");
@@ -56,14 +62,15 @@ public class AccountTests {
     @Test
     void getAccountTransactions() {
         final Account account = createAccount();
-        account.apply(new Deposit(new Amount(2, "USD"),"Sample Deposit 1"));
-        account.apply(new Deposit(new Amount(3, "USD"),"Sample Deposit 2"));
+        Transaction deposit1 = new Deposit(new Amount(2, "USD"),"Sample Deposit 1");
+        Transaction deposit2 = new Deposit(new Amount(3, "USD"),"Sample Deposit 2");
+
+        account.apply(deposit1);
+        account.apply(deposit2);
 
         assertEquals(2, account.transactions().size());
-        assertEquals(new Amount(2, "USD"), account.transactions().get(0).amount());
-        assertEquals("Sample Deposit 1", account.transactions().get(0).description());
-        assertEquals(new Amount(3, "USD"), account.transactions().get(1).amount());
-        assertEquals("Sample Deposit 2", account.transactions().get(1).description());
+        assertEquals(deposit1, account.transactions().get(0));
+        assertEquals(deposit2, account.transactions().get(1));
     }
 
     private Account createAccount() {

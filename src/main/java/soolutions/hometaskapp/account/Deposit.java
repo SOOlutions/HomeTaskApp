@@ -20,17 +20,7 @@ public class Deposit implements Transaction {
     }
 
     @Override
-    public Instant occurredAt() {
-        return occurredAt;
-    }
-
-    @Override
-    public String description() {
-        return description;
-    }
-
-    @Override
-    public Amount amount() {
-        return amount;
+    public Amount add(Amount amount) {
+        return this.amount.add(amount);
     }
 }

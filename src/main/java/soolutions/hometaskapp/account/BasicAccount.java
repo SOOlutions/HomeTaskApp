@@ -31,8 +31,7 @@ public class BasicAccount implements Account {
 
     @Override
     public void apply(Transaction transaction) {
-        if (!transaction.amount().matchesCurrency(currency))
-            throw new CurrencyMismatchException("Account only accepts " + currency);
+        transaction.add(new Amount(0, currency));
         transactions.add(transaction);
     }
 
@@ -45,7 +44,7 @@ public class BasicAccount implements Account {
     public Amount balance() {
         Amount amount = new Amount(0, currency);
         for (Transaction t : transactions)
-            amount = amount.add(t.amount());
+            amount = t.add(amount);
         return amount;
     }
 }
