@@ -24,6 +24,10 @@ public final class Amount {
     return new Amount(this.value + other.value, currency);
   }
 
+  public boolean matchesCurrency(String currency) {
+      return this.currency.equalsIgnoreCase(currency);
+  }
+
   public boolean equals(Object obj) {
     if (obj == null || getClass() != obj.getClass()) {
       return false;
