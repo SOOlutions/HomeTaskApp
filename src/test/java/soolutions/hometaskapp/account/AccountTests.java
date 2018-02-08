@@ -2,15 +2,12 @@ package soolutions.hometaskapp.account;
 
 import org.junit.jupiter.api.Test;
 
-import soolutions.hometaskapp.account.Account;
-import soolutions.hometaskapp.account.BasicAccount;
 import soolutions.hometaskapp.common.Amount;
 import soolutions.hometaskapp.common.CurrencyMismatchException;
 import soolutions.hometaskapp.common.InvalidAmountException;
 import soolutions.hometaskapp.user.BasicUser;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -68,9 +65,7 @@ public class AccountTests {
         account.apply(deposit1);
         account.apply(deposit2);
 
-        assertEquals(2, account.transactions().size());
-        assertEquals(deposit1, account.transactions().get(0));
-        assertEquals(deposit2, account.transactions().get(1));
+        assertIterableEquals(Arrays.asList(deposit1, deposit2), account.transactions());
     }
 
     private Account createAccount() {

@@ -1,11 +1,9 @@
 package soolutions.hometaskapp.account;
 
 import soolutions.hometaskapp.common.Amount;
-import soolutions.hometaskapp.common.CurrencyMismatchException;
 import soolutions.hometaskapp.user.User;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 

@@ -2,7 +2,6 @@ package soolutions.hometaskapp.account;
 
 import soolutions.hometaskapp.common.Amount;
 
-import java.util.Collection;
 import java.util.List;
 
 public interface Account {
