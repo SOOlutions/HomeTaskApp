@@ -17,10 +17,7 @@ public final class Amount {
   }
 
   public Amount add(Amount other) {
-    if (!currency.equals(other.currency)) {
-      throw new CurrencyMismatchException(
-          "Cannot apply different currencies " + currency + " : " + other.currency);
-    }
+      ensureSameCurrency(this, other);
     return new Amount(this.value + other.value, currency);
   }
 
