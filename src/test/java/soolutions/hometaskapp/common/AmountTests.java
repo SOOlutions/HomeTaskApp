@@ -16,11 +16,11 @@ public class AmountTests {
     }
 
     @Test
-    void withdrawCurrencyMismatch() {
+    void subtractCurrencyMismatch() {
         final Amount amount = new Amount(1, "USD");
 
         assertThrows(CurrencyMismatchException.class, () -> {
-            amount.withdraw(new Amount(1, "EUR"));
+            amount.subtract(new Amount(1, "EUR"));
         }, "should fail");
     }
 }

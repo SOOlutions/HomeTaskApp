@@ -24,6 +24,6 @@ public class Withdrawal implements Transaction {
 
     @Override
     public Amount apply(Amount amount) {
-        return amount.withdraw(this.amount);
+        return amount.subtract(this.amount);
     }
 }

@@ -21,7 +21,7 @@ public final class Amount {
     return new Amount(this.value + other.value, currency);
   }
 
-  public Amount withdraw(Amount other) {
+  public Amount subtract(Amount other) {
       ensureSameCurrency(other);
       return new Amount(this.value - other.value, currency);
   }
