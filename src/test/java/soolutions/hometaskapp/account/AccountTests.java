@@ -57,7 +57,7 @@ public class AccountTests {
     @Test
     void withdrawalInvalidAmount() {
         assertThrows(InvalidAmountException.class, () -> {
-            new Withdrawal(new Amount(-1, "USD"),"Sample Deposit 1");
+            new Withdrawal(new Amount(-1, "USD"),"Sample Withdrawal 1");
         }, "should fail");
     }
 
