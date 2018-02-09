@@ -51,9 +51,9 @@ public final class Amount {
   }
 
   private void ensureSameCurrency(Amount other) {
-      if (!a.currency.equals(b.currency)) {
+      if (!this.currency.equals(other.currency)) {
           throw new CurrencyMismatchException(
-              "Specified amount has different currency: " + a.currency + ", expected " + b.currency + ".");
+              "Specified amount has different currency: " + other.currency + ", expected " + this.currency + ".");
       }
   }
 }
