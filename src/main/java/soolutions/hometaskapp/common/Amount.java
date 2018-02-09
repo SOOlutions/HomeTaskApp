@@ -17,12 +17,12 @@ public final class Amount {
   }
 
   public Amount add(Amount other) {
-      ensureSameCurrency(this, other);
+      ensureSameCurrency(other);
     return new Amount(this.value + other.value, currency);
   }
 
   public Amount withdraw(Amount other) {
-      ensureSameCurrency(this, other);
+      ensureSameCurrency(other);
       return new Amount(this.value - other.value, currency);
   }
 
@@ -31,7 +31,7 @@ public final class Amount {
   }
 
   public int compareTo(Amount other) {
-      ensureSameCurrency(this, other);
+      ensureSameCurrency(other);
       return Double.compare(this.value, other.value);
   }
 
@@ -50,10 +50,10 @@ public final class Amount {
     return this.value + " (" + this.currency + ")";
   }
 
-  private static void ensureSameCurrency(Amount a, Amount b) {
+  private void ensureSameCurrency(Amount other) {
       if (!a.currency.equals(b.currency)) {
           throw new CurrencyMismatchException(
-                  "Cannot apply different currencies " + a.currency + " : " + b.currency);
+              "Specified amount has different currency: " + a.currency + ", expected " + b.currency + ".");
       }
   }
 }
