@@ -29,7 +29,7 @@ public class BasicAccount implements Account {
 
     @Override
     public void apply(Transaction transaction) {
-        transaction.add(new Amount(0, currency));
+        transaction.apply(new Amount(0, currency));
         transactions.add(transaction);
     }
 
@@ -42,7 +42,7 @@ public class BasicAccount implements Account {
     public Amount balance() {
         Amount amount = new Amount(0, currency);
         for (Transaction t : transactions)
-            amount = t.add(amount);
+            amount = t.apply(amount);
         return amount;
     }
 }
