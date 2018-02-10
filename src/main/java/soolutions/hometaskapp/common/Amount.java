@@ -8,24 +8,31 @@ public final class Amount {
   private final String currency;
 
   public Amount(double value, String currency) {
-    if (value < 0) {
-      throw new InvalidAmountException(value);
-    }
-
     this.value = value;
     this.currency = currency;
   }
 
+  public Amount zero() {
+      return new Amount(0, this.currency);
+  }
+
   public Amount add(Amount other) {
-    if (!currency.equals(other.currency)) {
-      throw new CurrencyMismatchException(
-          "Cannot add different currencies " + currency + " : " + other.currency);
-    }
+      ensureSameCurrency(other);
     return new Amount(this.value + other.value, currency);
+  }
+
+  public Amount subtract(Amount other) {
+      ensureSameCurrency(other);
+      return new Amount(this.value - other.value, currency);
   }
 
   public boolean matchesCurrency(String currency) {
       return this.currency.equalsIgnoreCase(currency);
+  }
+
+  public int compareTo(Amount other) {
+      ensureSameCurrency(other);
+      return Double.compare(this.value, other.value);
   }
 
   public boolean equals(Object obj) {
@@ -41,5 +48,12 @@ public final class Amount {
 
   public String toString() {
     return this.value + " (" + this.currency + ")";
+  }
+
+  private void ensureSameCurrency(Amount other) {
+      if (!this.currency.equals(other.currency)) {
+          throw new CurrencyMismatchException(
+              "Specified amount has different currency: " + other.currency + ", expected " + this.currency + ".");
+      }
   }
 }

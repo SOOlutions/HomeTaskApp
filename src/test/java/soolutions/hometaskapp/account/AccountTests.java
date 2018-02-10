@@ -27,7 +27,7 @@ public class AccountTests {
     }
 
     @Test
-    void depositAmount() {
+    void deposit() {
         final Account account = createAccount();
         account.apply(new Deposit(new Amount(0, "USD"),"Sample Deposit 1"));
         account.apply(new Deposit(new Amount(1, "USD"),"Sample Deposit 2"));
@@ -37,22 +37,27 @@ public class AccountTests {
     }
 
     @Test
-    void depositAmountInvalidAmount() {
-        final Account account = createAccount();
-
+    void depositInvalidAmount() {
         assertThrows(InvalidAmountException.class, () -> {
-            account.apply(new Deposit(new Amount(-1, "USD"),"Sample Deposit 1"));
+            new Deposit(new Amount(-1, "USD"),"Sample Deposit 1");
         }, "should fail");
     }
 
     @Test
-    void depositAmountCurrencyMismatch() {
+    void withdrawal() {
         final Account account = createAccount();
-        account.apply(new Deposit(new Amount(0, "USD"),"Sample Deposit 1"));
-        account.apply(new Deposit(new Amount(1, "USD"),"Sample Deposit 2"));
+        account.apply(new Deposit(new Amount(10, "USD"), "Sample Deposit 1"));
+        account.apply(new Withdrawal(new Amount(5, "USD"),"Sample Withdrawal 1"));
+        account.apply(new Withdrawal(new Amount(1, "USD"),"Sample Withdrawal 2"));
+        account.apply(new Withdrawal(new Amount(4, "USD"), "Sample Withdrawal 3"));
 
-        assertThrows(CurrencyMismatchException.class, () -> {
-            account.apply(new Deposit(new Amount(7, "EUR"),"Sample Deposit 3"));
+        assertEquals(new Amount(0.0, "USD"), account.balance());
+    }
+
+    @Test
+    void withdrawalInvalidAmount() {
+        assertThrows(InvalidAmountException.class, () -> {
+            new Withdrawal(new Amount(-1, "USD"),"Sample Withdrawal 1");
         }, "should fail");
     }
 
