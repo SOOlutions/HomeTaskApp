@@ -9,19 +9,26 @@ import soolutions.hometaskapp.account.BasicAccount;
 import soolutions.hometaskapp.account.Deposit;
 import soolutions.hometaskapp.account.Transaction;
 import soolutions.hometaskapp.account.Transfer;
+import soolutions.hometaskapp.account.Transfer.InvalidTransactionException;
 import soolutions.hometaskapp.common.Amount;
 import soolutions.hometaskapp.user.BasicUser;
 
 public class TransferTests {
+    private AccountFactory dollarAccountFactory;
+
+    @BeforeEach
+    void setup() {
+        dollarAccountFactory = new AccountFactory("USD");
+    }
 
     @Test
     void transferShouldFailForClosedAccounts() {
         Transfer transfer = new Transfer();
-        Account from = createAccount(5, "USD");
+        Account from = createAccount(5);
+        Account to = createAccount(0);
         from.close();
-        Account to = createAccount(0, "USD");
 
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(InvalidTransactionException.class, () -> {
             transfer.apply(from, to, new Amount(5, "USD"));
         }, "should fail");
     }
@@ -29,10 +36,10 @@ public class TransferTests {
     @Test
     void transferAmountShouldBeLessThanSourceAccountBalance() {
         Transfer transfer = new Transfer();
-        Account from = createAccount(5, "USD");
-        Account to = createAccount(0, "USD");
+        Account from = createAccount(5);
+        Account to = createAccount(0);
 
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(InvalidTransactionException.class, () -> {
             transfer.apply(from, to, new Amount(10, "USD"));
         }, "should fail");
     }
@@ -40,8 +47,8 @@ public class TransferTests {
     @Test
     void successfulTransferShouldUpdateBalanace() {
         Transfer transfer = new Transfer();
-        Account from = createAccount(5, "USD");
-        Account to = createAccount(0, "USD");
+        Account from = createAccount(5);
+        Account to = createAccount(0);
 
         transfer.apply(from, to, new Amount(5, "USD"));
 
@@ -50,13 +57,21 @@ public class TransferTests {
     }
 
     private Account createAccount(double openingBalance) {
-      return createAccount(openingBalance, "USD");
+        return dollarAccountFactory.create(openingBalance);
     }
 
-    private Account createAccount(double openingBalance, String currency) {
-        Account newAccount = new BasicAccount(new BasicUser(), currency);
-        Transaction deposit = new Deposit(new Amount(openingBalance, currency), "");
-        newAccount.apply(deposit);
-        return newAccount;
+    private static class AccountFactory {
+      private final String currency;
+
+      AccountFactory(String currency) {
+        this.currency = currency;
+      }
+
+      Account create(double balance) {
+          Account newAccount = new BasicAccount(new BasicUser(), currency);
+          Transaction deposit = new Deposit(new Amount(openingBalance, currency), "");
+          newAccount.apply(deposit);
+          return newAccount;
+      }
     }
 }

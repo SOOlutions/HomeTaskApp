@@ -13,13 +13,25 @@ public final class Transfer {
         to.apply(new Deposit(amount, "Transfer from " + from));
     }
 
-    // TODO(vivek): create domain specific exception classes
     private void precondition(Account from, Account to, Amount amount) {
-      if (!from.open() || !to.open()) {
-        throw new IllegalArgumentException();
-      }
-      if (amount.compareTo(from.balance()) < 0) {
-        throw new IllegalArgumentException();
-      }
+        if (!from.open()) {
+          throwException("Given account is closed " + from);
+        }
+        if (!to.open()) {
+          throwException("Given account is closed " + to);
+        }
+        if (amount.compareTo(from.balance()) < 0) {
+          throwException("Source account balance cannot be negative " + from);
+        }
+    }
+
+    private void throwException(String msg) {
+        throw new InvalidTransactionException(msg);
+    }
+
+    public static class InvalidTransactionException extends RuntimeException {
+        public InvalidTransactionException(String msg) {
+           super(msg);
+        }
     }
 }
