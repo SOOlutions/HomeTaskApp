@@ -11,9 +11,10 @@ public class BasicAccount implements Account {
     private final List<Transaction> transactions;
     private final User user;
     private final String currency;
+    private boolean closed;
 
     public BasicAccount(User user, String currency) {
-      this(user, currency, new ArrayList<>());
+        this(user, currency, new ArrayList<>());
     }
 
     public BasicAccount(User user, String currency, List<Transaction> transactions) {
@@ -24,7 +25,12 @@ public class BasicAccount implements Account {
 
     @Override
     public boolean open() {
-        return true;
+        return !closed;
+    }
+
+    @Override
+    public void close() {
+        closed = true;
     }
 
     @Override
