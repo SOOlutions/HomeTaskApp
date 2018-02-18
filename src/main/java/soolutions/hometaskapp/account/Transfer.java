@@ -7,13 +7,23 @@ import soolutions.hometaskapp.account.Withdrawal;
 import soolutions.hometaskapp.common.Amount;
 
 public final class Transfer {
-    public void apply(Account from, Account to, Amount amount) {
-        precondition(from, to, amount);
+    private final Account from;
+    private final Account to;
+    private final Amount amount;
+
+    public Transfer(Account from, Account to, Amount amount) {
+        this.from = from;
+        this.to = to;
+        this.amount = amount;
+    }
+
+    public void apply() {
+        precondition();
         from.apply(new Withdrawal(amount, "Transfer to " + to));
         to.apply(new Deposit(amount, "Transfer from " + from));
     }
 
-    private void precondition(Account from, Account to, Amount amount) {
+    private void precondition() {
         if (!from.open()) {
           throwException("Given account is closed " + from);
         }
@@ -21,7 +31,9 @@ public final class Transfer {
           throwException("Given account is closed " + to);
         }
         if (amount.compareTo(from.balance()) < 0) {
-          throwException("Source account balance cannot be negative " + from);
+          throwException(
+              "Source account doesn't have enough balance: transfering " +
+              amount + " but available " + from.balance() + ".");
         }
     }
 
