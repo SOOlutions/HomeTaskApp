@@ -1,9 +1,5 @@
 package soolutions.hometaskapp.account;
 
-import soolutions.hometaskapp.account.Account;
-import soolutions.hometaskapp.account.Deposit;
-import soolutions.hometaskapp.account.Transaction;
-import soolutions.hometaskapp.account.Withdrawal;
 import soolutions.hometaskapp.common.Amount;
 
 public final class Transfer {
@@ -30,7 +26,7 @@ public final class Transfer {
         if (!to.open()) {
           throwException("Given account is closed " + to);
         }
-        if (amount.compareTo(from.balance()) < 0) {
+        if (from.balance().compareTo(amount) < 0) {
           throwException(
               "Source account doesn't have enough balance: transfering " +
               amount + " but available " + from.balance() + ".");
