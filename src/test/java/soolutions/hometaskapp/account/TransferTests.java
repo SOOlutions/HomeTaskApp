@@ -29,9 +29,7 @@ public class TransferTests {
         Transfer transfer = new Transfer(from, to, new Amount(5, "USD"));
         from.close();
 
-        assertThrows(InvalidTransactionException.class, () -> {
-            transfer.apply();
-        }, "should fail");
+        assertThrows(InvalidTransactionException.class, transfer::apply, "should fail");
     }
 
     @Test
@@ -40,9 +38,7 @@ public class TransferTests {
         Account to = createAccount(0);
         Transfer transfer = new Transfer(from, to, new Amount(10, "USD"));
 
-        assertThrows(InvalidTransactionException.class, () -> {
-            transfer.apply();
-        }, "should fail");
+        assertThrows(InvalidTransactionException.class, transfer::apply, "should fail");
     }
 
     @Test
@@ -53,7 +49,7 @@ public class TransferTests {
         transfer.apply();
 
         assertEquals(from.balance(), new Amount(0, "USD"));
-        assertEquals(to.balance(), new Amount(4, "USD"));
+        assertEquals(to.balance(), new Amount(5, "USD"));
     }
 
     private Account createAccount(double openingBalance) {
