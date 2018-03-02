@@ -34,6 +34,11 @@ public class BasicAccount implements Account {
     }
 
     @Override
+    public String userName() {
+      return user.getName();
+    }
+
+    @Override
     public void apply(Transaction transaction) {
         transaction.apply(new Amount(0, currency));
         transactions.add(transaction);
